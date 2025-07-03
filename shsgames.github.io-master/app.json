@@ -1,0 +1,7 @@
+{
+  "name": "FUNNI.games",
+  "description": "A modern, unblocked games hub.",
+  "repository": "https://github.com/laghf/FUNNI.games",
+  "logo": "https://cdn.jsdelivr.net/gh/YOUR_GITHUB_USERNAME/FUNNI.games@main/app/public/icon.png",
+  "keywords": ["node", "express", "static"]
+}
