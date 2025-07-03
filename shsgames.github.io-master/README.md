@@ -16,6 +16,6 @@ FUNNI.games is a free and open source hub for games. Designed to be unblocked an
 ---
 
 ## Deploy Your Own
-Fork this repository and host with GitHub Pages, Vercel, or Netlify.
+Fork this repository and host with GitHub Pages, Vercel, or Netlify..
 
 ---
