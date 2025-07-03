@@ -2,9 +2,8 @@ import { ElementType, StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { registerSW } from "virtual:pwa-register";
-import { base } from "./manifest.json";
 import ErrorBoundary from "./src/runtime/ErrorBoundry";
 import "styles/main.less";
 import "setimmediate";
@@ -21,7 +20,7 @@ if ("serviceWorker" in navigator && !/localhost/.test(window.location.toString()
 export const queryClient = new QueryClient;
 
 export type Page = { default: ElementType, path: string, caseSensitive?: boolean };
-const pages = import.meta.globEager<Page>("./src/pages/*.tsx");
+const pages = import.meta.glob<Page>("./src/pages/*.tsx", { eager: true });
 
 // Log SHS GAMES!!
 console.log(" _______           _______    _______  _______  _______  _______  _______ \n(  ____ \\|\\     /|(  ____ \\  (  ____ \\(  ___  )(       )(  ____ \\(  ____ \\\n| (    \\/| )   ( || (    \\/  | (    \\/| (   ) || () () || (    \\/| (    \\/\n| (_____ | (___) || (_____   | |      | (___) || || || || (__    | (_____ \n(_____  )|  ___  |(_____  )  | | ____ |  ___  || |(_)| ||  __)   (_____  )\n      ) || (   ) |      ) |  | | \\_  )| (   ) || |   | || (            ) |\n/\\____) || )   ( |/\\____) |  | (___) || )   ( || )   ( || (____/\\/\\____) |\n\\_______)|/     \\|\\_______)  (_______)|/     \\||/     \\|(_______/\\_______)");
@@ -32,13 +31,13 @@ ReactDOM.render(
 	<StrictMode>
 		<ErrorBoundary>
 			<QueryClientProvider client={ queryClient }>
-				<BrowserRouter>
+				<HashRouter>
 					<Toolbar/>
 					<Drawer/>
 					<Routes>
-						{ Object.values(pages).map((page, key) => <Route
+						{ Object.values(pages).map((page: Page, key) => <Route
 							key={ key }
-							path={ base + page.path.substring(1) }
+							path={ page.path }
 							caseSensitive={ page.caseSensitive || false }
 							element={ <page.default/> }/>
 						) }
@@ -46,7 +45,7 @@ ReactDOM.render(
 					<Footer/>
 					<PWAInstaller/>
 					<Keybinds/>
-				</BrowserRouter>
+				</HashRouter>
 				{ !PRODUCTION && <ReactQueryDevtools/> }
 			</QueryClientProvider>
 		</ErrorBoundary>
